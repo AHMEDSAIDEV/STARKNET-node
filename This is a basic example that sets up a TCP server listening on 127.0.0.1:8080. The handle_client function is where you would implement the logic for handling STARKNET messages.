@@ -1,0 +1,31 @@
+// Assuming you have necessary dependencies in your Cargo.toml
+
+use std::net::{TcpListener, TcpStream};
+use std::io::{Read, Write};
+
+fn handle_client(mut stream: TcpStream) {
+    // Implement STARKNET protocol handling here
+    // Read and process incoming messages
+    // Respond accordingly
+    
+    let response = "Hello, STARKNET!";
+    stream.write_all(response.as_bytes()).unwrap();
+}
+
+fn main() {
+    let listener = TcpListener::bind("127.0.0.1:8080").expect("Failed to bind");
+
+    for stream in listener.incoming() {
+        match stream {
+            Ok(stream) => {
+                // Spawn a new thread or async task for each incoming connection
+                std::thread::spawn(|| {
+                    handle_client(stream);
+                });
+            }
+            Err(e) => {
+                eprintln!("Error: {}", e);
+            }
+        }
+    }
+}p￼Enter
